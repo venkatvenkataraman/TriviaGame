@@ -1,0 +1,32 @@
+
+
+
+.btn-xlarge{
+  padding: 28px;
+  margin: 28px;
+  font-size: 48px; //change this to your desired size
+  line-height: normal;
+  -webkit-border-radius: 8px;
+     -moz-border-radius: 8px;
+          border-radius: 8px;
+}
+
+.btn-large{
+  padding: 28px;
+  margin: 28px;
+  font-size: 24px; //change this to your desired size
+  line-height: normal;
+  -webkit-border-radius: 8px;
+     -moz-border-radius: 8px;
+          border-radius: 8px;
+}
+
+#timerDisplay {
+  font-family: monospace;
+  font-size: 28px;
+  color: green;
+  /* Typography */
+  text-align: center;
+  /* Visual */
+  background: black;
+}
