@@ -94,6 +94,8 @@ function displayANewTriviaQuestion(questionNumber){
   $("#ansChoice2").text("2: "+triviaQAArray[questionNumber-1].ansChoice2);
   $("#ansChoice3").text("3: "+triviaQAArray[questionNumber-1].ansChoice3);
   $("#ansChoice4").text("4: "+triviaQAArray[questionNumber-1].ansChoice4);
+  $("#commit").show();
+  $("#startOver").hide();
 }
 
 $('.ansCheck').click(function() {
@@ -121,6 +123,9 @@ $('.ansCheck').click(function() {
 
 function displayFinalScore(correctAnswerCount, incorrectAnswerCount, unAnsweredCount){
    // window.open('finalScore.html','_self');
+
+   stopwatch.stop();
+   stopwatch.reset();
    console.log(correctAnswerCount);
    console.log(incorrectAnswerCount);
    console.log(unAnsweredCount);
@@ -194,8 +199,23 @@ var stopwatch = {
  }
 };
 
-function delayFunction(){
-
+function displayCorrectAnswer(pickedAnswer,currentQuestion){
+  stopwatch.stop();
+  stopwatch.reset();
+  $('#triviaQuestion').html("YOU ARE CORRECT!");
+  $('#ansChoice1').html("The Correct Answers is: ");
+  $('#ansChoice2').html("Answer #: " + pickedAnswer);
+  var tempString = "ansChoice" + pickedAnswer;
+  $('#ansChoice3').html(triviaQAArray[currentQuestion-1].tempString);
+  // var imagePath = "assets/images/"+triviaQAArray[currentQuestion-1].picture;
+  // console.log(imagePath);
+  $('#ansChoice4').html('<img src="assets/images/"+triviaQAArray[currentQuestion-1].picture/>');
+  // $('#chk1').hide();
+  // $('#chk2').hide();
+  // $('#chk3').hide();
+  // $('#chk4').hide();
+  $("#commit").hide();
+  $("#startOver").hide();
 }
 
 $('#commit').on('click', function() {
@@ -205,18 +225,9 @@ $('#commit').on('click', function() {
      if (pickedAnswer == triviaQAArray[currentQuestion-1].correctAns) {
           alert("CORRECT ANSWER");
           correctAnswerCount++;
-          // $('#triviaQuestion').text("YOU ARE CORRECT!");
-          // $('#ansChoice1').text("The Correct Answers is: ");
-          // $('#ansChoice2').text("Answer #: " + pickedAnswer);
-          // var tempString = "ansChoice" + pickedAnswer;
-          // $('#ansChoice3').text(triviaQAArray[currentQuestion].tempString);
-          // var imagePath = "assets/images/"+triviaQAArray[currentQuestion].picture;
-          // $('#ansChoice4').text('<img src=imagePath/>');
-          // $('#chk1').hide();
-          // $('#chk2').hide();
-          // $('#chk3').hide();
-          // $('#chk4').hide();
-          window.setTimeout(delayFunction,3000);
+          displayCorrectAnswer(pickedAnswer,currentQuestion);
+          // window.setTimeout(displayCorrectAnswer(), 2000);
+          // window.setTimeout(delayFunction,3000);
      }
      else {
           alert("WRONG ANSWER");
@@ -232,7 +243,7 @@ $('#commit').on('click', function() {
      else //Questions over; Wrap up with score
      {
        console.log("List is now empty. All questions exhausted");
-       stopwatch.stop;
+       stopwatch.stop();
        displayFinalScore(correctAnswerCount, incorrectAnswerCount, unAnsweredCount);
      }
 });
