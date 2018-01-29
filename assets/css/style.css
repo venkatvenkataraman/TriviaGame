@@ -1,5 +1,24 @@
 
 
+body{
+    background: url("../images/spirationDark.png");
+}
+
+h1{
+  color: #fff;
+  text-align: center;
+}
+
+img {
+  display:block;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+#triviaQuestion, #ansChoice1, #ansChoice2, #ansChoice3, #ansChoice4{
+  color: #fff;
+  font-size: 16px;
+}
 
 .btn-xlarge{
   padding: 28px;

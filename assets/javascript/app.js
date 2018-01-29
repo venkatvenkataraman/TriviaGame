@@ -144,11 +144,11 @@ function displayFinalScore(correctAnswerCount, incorrectAnswerCount, unAnsweredC
 var clockRunning = false;
 var intervalId;
 var stopwatch = {
-  time: 0,
+  time: 10,
   reset: function() {
-    stopwatch.time = 0;
+    stopwatch.time = 10;
       // DONE: Change the "display" div to "00:00."
-    $("#timerDisplay").text("00");
+    $("#timerDisplay").text("Countdown: "+"10" +"Secs");
   },
   start: function() {
     // DONE: Use setInterval to start the count here and set the clock to running.
@@ -159,9 +159,10 @@ var stopwatch = {
   },
   count: function() {
     // DONE: increment time by 1, remember we cant use "this" here.
-    stopwatch.time++;
-    if (stopwatch.time == 15){
+    stopwatch.time--;
+    if (stopwatch.time == 0){
       // alert("TIME UP ON THIS QUESTION! CORRECT ANSWER DISPLAYED AND MOVING ON");
+      unAnsweredCount++;
       if (questionsOrder.length != 0) {
           currentQuestion = questionsOrder.pop();
           displayANewTriviaQuestion(currentQuestion);
@@ -193,6 +194,10 @@ var stopwatch = {
  }
 };
 
+function delayFunction(){
+
+}
+
 $('#commit').on('click', function() {
 
      console.log("Commit Current Q: "+currentQuestion);
@@ -200,6 +205,18 @@ $('#commit').on('click', function() {
      if (pickedAnswer == triviaQAArray[currentQuestion-1].correctAns) {
           alert("CORRECT ANSWER");
           correctAnswerCount++;
+          // $('#triviaQuestion').text("YOU ARE CORRECT!");
+          // $('#ansChoice1').text("The Correct Answers is: ");
+          // $('#ansChoice2').text("Answer #: " + pickedAnswer);
+          // var tempString = "ansChoice" + pickedAnswer;
+          // $('#ansChoice3').text(triviaQAArray[currentQuestion].tempString);
+          // var imagePath = "assets/images/"+triviaQAArray[currentQuestion].picture;
+          // $('#ansChoice4').text('<img src=imagePath/>');
+          // $('#chk1').hide();
+          // $('#chk2').hide();
+          // $('#chk3').hide();
+          // $('#chk4').hide();
+          window.setTimeout(delayFunction,3000);
      }
      else {
           alert("WRONG ANSWER");
