@@ -182,8 +182,8 @@ var stopwatch = {
       displayCorrectAnswer(correctAnswerChosen,currentQuestion);
       if (questionsOrder.length != 0) {
           currentQuestion = questionsOrder.pop();
-          // setTimeout (displayANewTriviaQuestion(currentQuestion), 2000);
-          setTimeout (function(){displayANewTriviaQuestion(currentQuestion);}, 2000);
+          // setTimeout (displayANewTriviaQuestion(currentQuestion), 3000);
+          setTimeout (function(){displayANewTriviaQuestion(currentQuestion);}, 3000);
           // displayANewTriviaQuestion(currentQuestion);
       }
       else //Questions over; Wrap up with score
@@ -283,7 +283,7 @@ $('#commit').on('click', function() {
      if (questionsOrder.length != 0) {
      // window.open('started.html','_self');
      currentQuestion = questionsOrder.pop();
-     setTimeout (function(){displayANewTriviaQuestion(currentQuestion);}, 2000);
+     setTimeout (function(){displayANewTriviaQuestion(currentQuestion);}, 3000);
      // displayANewTriviaQuestion(currentQuestion);
      }
      else //Questions over; Wrap up with score
