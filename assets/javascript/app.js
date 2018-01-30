@@ -242,9 +242,13 @@ function displayCorrectAnswer(correctAnswerChosen, currentQuestion){
   // console.log(currentQuestion);
   // console.log(triviaQAArray[currentQuestion-1].tempString);
   // $('#ansChoice3').html(triviaQAArray[currentQuestion-1].tempString);
-  // var imagePath = "assets/images/"+triviaQAArray[currentQuestion-1].picture;
-  // console.log(imagePath);
-  $('#ansImage').html('<img src="assets/images/"+triviaQAArray[currentQuestion-1].picture/>');
+
+  var imagePath = "assets/images/"+triviaQAArray[currentQuestion-1].picture;
+  console.log(imagePath);
+  // $('#ansImage').prepend('<img src=""+imagePath/>');
+  $('#imageDiv').prepend($('<img>',{id:'ansImage',src:imagePath}));
+  $('#ansImage').show();
+  // $('#ansImage').html('<img src="assets/images/"+triviaQAArray[currentQuestion-1].picture/>');
   $('#ansChoice4').hide();
   $('#chk1').hide();
   $('#chk2').hide();

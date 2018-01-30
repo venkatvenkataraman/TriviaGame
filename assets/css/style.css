@@ -15,6 +15,11 @@ img {
   margin-right:auto;
 }
 
+#ansImage {
+  height:180px;
+  width: auto;
+}
+
 #triviaQuestion, #ansChoice1, #ansChoice2, #ansChoice3, #ansChoice4{
   color: #fff;
   font-size: 16px;
