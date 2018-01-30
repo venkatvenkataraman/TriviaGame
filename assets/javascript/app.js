@@ -69,6 +69,8 @@ var pickedAnswer = 0;
 
 var correctAnswerCount = 0, incorrectAnswerCount = 0, unAnsweredCount = 0;
 
+var correctAnswerChosen = false;
+
 function buildRandomQuestionsList(){
 
   function getRandomIntInclusive(min, max) {
@@ -87,13 +89,20 @@ function buildRandomQuestionsList(){
 }
 
 function displayANewTriviaQuestion(questionNumber){
+  $("#timerDisplay").show();
   stopwatch.reset();
   stopwatch.start();
+  $('#ansImage').hide();
+  $('#ansChoice4').show();
   $("#triviaQuestion").text("Question: "+ triviaQAArray[questionNumber-1].question);
   $("#ansChoice1").text("1: "+triviaQAArray[questionNumber-1].ansChoice1);
   $("#ansChoice2").text("2: "+triviaQAArray[questionNumber-1].ansChoice2);
   $("#ansChoice3").text("3: "+triviaQAArray[questionNumber-1].ansChoice3);
   $("#ansChoice4").text("4: "+triviaQAArray[questionNumber-1].ansChoice4);
+  $('#chk1').show();
+  $('#chk2').show();
+  $('#chk3').show();
+  $('#chk4').show();
   $("#commit").show();
   $("#startOver").hide();
 }
@@ -126,6 +135,7 @@ function displayFinalScore(correctAnswerCount, incorrectAnswerCount, unAnsweredC
 
    stopwatch.stop();
    stopwatch.reset();
+   $("#timerDisplay").hide();
    console.log(correctAnswerCount);
    console.log(incorrectAnswerCount);
    console.log(unAnsweredCount);
@@ -168,9 +178,13 @@ var stopwatch = {
     if (stopwatch.time == 0){
       // alert("TIME UP ON THIS QUESTION! CORRECT ANSWER DISPLAYED AND MOVING ON");
       unAnsweredCount++;
+      correctAnswerChosen = false;
+      displayCorrectAnswer(correctAnswerChosen,currentQuestion);
       if (questionsOrder.length != 0) {
           currentQuestion = questionsOrder.pop();
-          displayANewTriviaQuestion(currentQuestion);
+          // setTimeout (displayANewTriviaQuestion(currentQuestion), 2000);
+          setTimeout (function(){displayANewTriviaQuestion(currentQuestion);}, 2000);
+          // displayANewTriviaQuestion(currentQuestion);
       }
       else //Questions over; Wrap up with score
       {
@@ -199,23 +213,49 @@ var stopwatch = {
  }
 };
 
-function displayCorrectAnswer(pickedAnswer,currentQuestion){
+function displayCorrectAnswer(correctAnswerChosen, currentQuestion){
+  $("#timerDisplay").hide();
   stopwatch.stop();
   stopwatch.reset();
-  $('#triviaQuestion').html("YOU ARE CORRECT!");
+  if (correctAnswerChosen) {
+    $('#triviaQuestion').html("YOU ARE CORRECT!");
+  }
+  else {
+    $('#triviaQuestion').html("YOU ARE WRONG!");
+  }
   $('#ansChoice1').html("The Correct Answers is: ");
-  $('#ansChoice2').html("Answer #: " + pickedAnswer);
-  var tempString = "ansChoice" + pickedAnswer;
-  $('#ansChoice3').html(triviaQAArray[currentQuestion-1].tempString);
+  $('#ansChoice2').html("Answer #: " + triviaQAArray[currentQuestion-1].correctAns);
+  if (triviaQAArray[currentQuestion-1].correctAns == 1){
+    $('#ansChoice3').html(triviaQAArray[currentQuestion-1].ansChoice1);
+  }
+  else if (triviaQAArray[currentQuestion-1].correctAns == 2){
+    $('#ansChoice3').html(triviaQAArray[currentQuestion-1].ansChoice2);
+  }
+  else if (triviaQAArray[currentQuestion-1].correctAns == 3){
+    $('#ansChoice3').html(triviaQAArray[currentQuestion-1].ansChoice3);
+  }
+  else if (triviaQAArray[currentQuestion-1].correctAns == 4){
+    $('#ansChoice3').html(triviaQAArray[currentQuestion-1].ansChoice4);
+  }
+  // var tempString = "ansChoice" + pickedAnswer;
+  // console.log(tempString);
+  // console.log(currentQuestion);
+  // console.log(triviaQAArray[currentQuestion-1].tempString);
+  // $('#ansChoice3').html(triviaQAArray[currentQuestion-1].tempString);
   // var imagePath = "assets/images/"+triviaQAArray[currentQuestion-1].picture;
   // console.log(imagePath);
-  $('#ansChoice4').html('<img src="assets/images/"+triviaQAArray[currentQuestion-1].picture/>');
-  // $('#chk1').hide();
-  // $('#chk2').hide();
-  // $('#chk3').hide();
-  // $('#chk4').hide();
+  $('#ansImage').html('<img src="assets/images/"+triviaQAArray[currentQuestion-1].picture/>');
+  $('#ansChoice4').hide();
+  $('#chk1').hide();
+  $('#chk2').hide();
+  $('#chk3').hide();
+  $('#chk4').hide();
   $("#commit").hide();
   $("#startOver").hide();
+
+  // var audio = new Audio("PHIL_COLLINSClip.mp3");
+  // audio.loop = false;
+  // audio.play();
 }
 
 $('#commit').on('click', function() {
@@ -223,22 +263,24 @@ $('#commit').on('click', function() {
      console.log("Commit Current Q: "+currentQuestion);
      console.log("Commit Current Q correctAns: "+triviaQAArray[currentQuestion-1].correctAns);
      if (pickedAnswer == triviaQAArray[currentQuestion-1].correctAns) {
-          alert("CORRECT ANSWER");
+          // alert("CORRECT ANSWER");
           correctAnswerCount++;
-          displayCorrectAnswer(pickedAnswer,currentQuestion);
-          // window.setTimeout(displayCorrectAnswer(), 2000);
-          // window.setTimeout(delayFunction,3000);
+          correctAnswerChosen = true;
+          displayCorrectAnswer(correctAnswerChosen,currentQuestion);
      }
      else {
-          alert("WRONG ANSWER");
+          // alert("WRONG ANSWER");
           incorrectAnswerCount++;
+          correctAnswerChosen = false;
+          displayCorrectAnswer(correctAnswerChosen, currentQuestion);
      }
      console.log(questionsOrder);
 
      if (questionsOrder.length != 0) {
      // window.open('started.html','_self');
      currentQuestion = questionsOrder.pop();
-     displayANewTriviaQuestion(currentQuestion);
+     setTimeout (function(){displayANewTriviaQuestion(currentQuestion);}, 2000);
+     // displayANewTriviaQuestion(currentQuestion);
      }
      else //Questions over; Wrap up with score
      {
